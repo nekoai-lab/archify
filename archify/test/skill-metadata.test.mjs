@@ -48,14 +48,11 @@ test('main skill stays a bounded authoring router with progressive references', 
   }
 });
 
-test('update awareness is notification-only and never replaces the requested workflow', () => {
-  assert.match(skill, /`scripts\/check-update\.mjs`/);
-  assert.match(skill, /`silent`[\s\S]*without mentioning/i);
-  assert.match(skill, /`update_available`[\s\S]*compact notice/i);
-  assert.match(skill, /information, not permission/i);
-  assert.match(skill, /`severity` is `security`[\s\S]*security update[\s\S]*emphasis only, never user autonomy/i);
-  assert.match(skill, /continue the user's original task/i);
-  assert.match(skill, /installed version unchanged/i);
+test('nekoai-lab fork never runs the upstream update check', () => {
+  assert.match(skill, /nekoai-lab fork/);
+  assert.match(skill, /never checks for updates/i);
+  assert.match(skill, /do not run `scripts\/check-update\.mjs`/i);
+  assert.doesNotMatch(skill, /run the packaged checker/i);
   assert.doesNotMatch(skill, /npx skills update|gh skill update/i);
 });
 
